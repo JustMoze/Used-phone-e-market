@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import './App.css';
+import Navbar from './components/Navbar';
 
 function App() {
-  return (
-    <div>
-    Movies     
-    </div>
-  );
+    return (
+        <Fragment>
+            <Navbar />
+        </Fragment>
+    );
 }
 
 export default App;
