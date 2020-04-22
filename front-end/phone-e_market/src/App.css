@@ -56,3 +56,16 @@
 .roolNavLink {
     font-size: 2rem;
 }
+.userIcon {
+    margin-top: 1rem;
+}
+.navUserIcon {
+    margin-left: 6%;
+}
+.userName {
+    color: #ffcd38;
+    font-size: 1.25rem;
+}
+.greetings {
+    font-family: 'Bangers', cursive;
+}
