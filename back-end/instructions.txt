@@ -1,1 +1,0 @@
-In back-end folder will be stored server set up files
