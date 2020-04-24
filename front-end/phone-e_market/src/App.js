@@ -2,8 +2,9 @@ import React, { Fragment } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Login from './components/Login';
-import './App.css';
 import Registration from './components/Registration';
+import Phones from './components/Phones';
+import './App.css';
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
                 <Switch>
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Registration} />
+                    <Route path="/phones" component={Phones} />
                 </Switch>
             </div>
         </Fragment>
