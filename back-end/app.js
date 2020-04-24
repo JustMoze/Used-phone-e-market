@@ -3,6 +3,7 @@ const express = require('express');
 const config = require('config');
 const router = require('./routes/index');
 const userRoute = require('./routes/users');
+const phonesRoute = require('./routes/phones');
 const mongoose = require('mongoose');
 const app = express();
 
@@ -10,6 +11,7 @@ const app = express();
 app.use(express.json());
 app.use('/', router);
 app.use('/api/users', userRoute);
+app.use('/api/phones', phonesRoute);
 
 const PORT = process.env.PORT || config.get('port');
 // connect to db

@@ -2,8 +2,9 @@ const config = require('config');
 const jwt = require('jsonwebtoken');
 const Joi = require('joi');
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -22,7 +23,13 @@ const userSchema = new mongoose.Schema({
         required: true,
         minlength: 5,
         maxlength: 1024
-    }
+    },
+    phones: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Phone'
+        }
+    ]
 });
 
 userSchema.methods.generateAuthToken = function () {
