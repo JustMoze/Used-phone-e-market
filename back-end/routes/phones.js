@@ -1,6 +1,7 @@
 const { Phone, validate } = require('../models/phones');
 const auth = require('../middleware/auth');
 const express = require('express');
+const validateObjectId = require('../middleware/validateObjectId');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -37,6 +38,24 @@ router.post('/', [auth], async (req, res) => {
     } catch (error) {
         console.log('Occured eror', error);
     }
+});
+// front check if user id matches phone creator id
+router.delete('/:id', [auth], async (req, res) => {
+    const phone = await Phone.findByIdAndDelete(req.params.id);
+
+    if (!phone)
+        return res.status(400).send('The movie with given ID was not found');
+
+    res.send(phone);
+});
+router.get('/:id', validateObjectId, async (req, res) => {
+    console.log('req paramas', req.params);
+    const phone = await Phone.findById(req.params.id).select('-__v');
+
+    if (!phone) {
+        return res.status(404).send('The movie with given ID was not found');
+    }
+    res.send(phone);
 });
 
 module.exports = router;
