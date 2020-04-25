@@ -34,5 +34,4 @@ class Registration extends Form {
         );
     }
 }
-
 export default Registration;
