@@ -6,11 +6,11 @@ function UserIcon(props) {
         <div className="widget-header icontext row">
             <div className="col userIcon">
                 <span className="icon icon-sm rounded-circle border">
-                    <i className="fa fa-user fa-2x"></i>
+                    <i className="fa fa-user fa-2x secondaryColor"></i>
                 </span>
             </div>
             <div className="text">
-                <span className="greetings">Welcome!</span>
+                <span className="greetings secondaryColor">Welcome!</span>
                 <div className="userName">{user}</div>
             </div>
         </div>

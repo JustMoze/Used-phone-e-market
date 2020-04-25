@@ -1,19 +1,8 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 
 function Upload(props) {
-    const [imageUpload, setImageUpload] = useState([]);
+    // const [imageUpload, setImageUpload] = useState([]);
     const [imagePaths, setImagePaths] = useState([]);
-    const useStyles = makeStyles((theme) => ({
-        root: {
-            '& > *': {
-                margin: theme.spacing(1)
-            }
-        },
-        input: {
-            display: 'none'
-        }
-    }));
     function onClickHandler() {
         console.log('Button was clicked');
     }
@@ -21,7 +10,7 @@ function Upload(props) {
         console.log(e.target.files);
         const { files: images } = e.target;
         console.log('Images', images);
-        setImageUpload(images);
+        // setImageUpload(images);
         const paths = [];
 
         for (const file of images) {
@@ -30,7 +19,6 @@ function Upload(props) {
         }
         setImagePaths(paths);
     }
-    const classes = useStyles();
     return (
         <div className="row">
             <div className="col-md-6">
@@ -55,7 +43,7 @@ function Upload(props) {
                 <div className="row">
                     {imagePaths.map((path, index) => (
                         <div key={index} className="parent">
-                            <img key={index} src={path} />
+                            <img key={index} alt={index} src={path} />
                         </div>
                     ))}
                 </div>
@@ -65,22 +53,3 @@ function Upload(props) {
 }
 
 export default Upload;
-
-{
-    /* <input
-    accept="image/*"
-    className={classes.input}
-    id="icon-button-file"
-    type="file"
-    onClick={handleUpload}
-/>
-<label htmlFor="icon-button-file">
-    <IconButton
-        color="primary"
-        aria-label="upload picture"
-        component="span"
-    >
-        <PhotoCamera />
-    </IconButton>
-</label> */
-}

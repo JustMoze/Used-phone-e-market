@@ -18,7 +18,7 @@ function NavbarLink(props) {
             onMouseOver={handleMouseOver}
             onMouseOut={handleMouseOut}
             className={mouseOver ? styleMouseOver : styleMouseOut}
-            style={{ color: mouseOver ? '#ffcd38' : '#1a2526' }}
+            style={{ color: mouseOver ? '#ffcd38' : '#cccebd' }}
             to={to}
         >
             {label}
