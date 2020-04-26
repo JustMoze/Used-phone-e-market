@@ -10,8 +10,9 @@ router.get('/me', auth, async (req, res) => {
     res.send(user);
 });
 
-router.get('/', (req, res) => {
-    res.send('We are in users route');
+router.get('/', async (req, res) => {
+    const users = await User.find().select('-').sort('name');
+    res.send(users);
 });
 
 router.post('/', async (req, res) => {

@@ -2,6 +2,29 @@ const { Phone, validate } = require('../models/phones');
 const auth = require('../middleware/auth');
 const express = require('express');
 const validateObjectId = require('../middleware/validateObjectId');
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: function (req, files, callBack) {
+        callBack(null, './uploads/');
+    },
+    filename: function (req, file, callBack) {
+        callBack(null, file.originalname);
+    }
+});
+const fileFilter = (req, file, callback) => {
+    if (file.mimetype === 'image/png' || file.mimetype === 'image/jpeg') {
+        callback(null, true);
+    } else {
+        callback(null, false);
+    }
+};
+const upload = multer({
+    storage: storage,
+    limits: {
+        fileSize: 1024 * 1024 * 5 // 5MB
+    },
+    fileFilter: fileFilter
+});
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -9,7 +32,8 @@ router.get('/', async (req, res) => {
     res.send(phones);
 });
 
-router.post('/', [auth], async (req, res) => {
+router.post('/', [auth], upload.array('images', 7), async (req, res) => {
+    console.log('re files -', req.files);
     console.log('request body - ', req.body);
     const { error } = validate(req.body);
     if (error) {
@@ -17,10 +41,10 @@ router.post('/', [auth], async (req, res) => {
     }
     try {
         const imageArray = [];
-        req.body.images.map((image) => {
-            imageArray.push(image);
+        req.files.map((image) => {
+            const correctPath = String(image.path);
+            imageArray.push({ path: correctPath.replace('\\', '/') });
         });
-        console.log('Image array', imageArray);
         const phone = new Phone({
             brand: req.body.brand,
             model: req.body.model,
@@ -30,7 +54,7 @@ router.post('/', [auth], async (req, res) => {
             storageSize: req.body.storageSize,
             color: req.body.color,
             price: req.body.price,
-            images: req.body.images,
+            images: imageArray,
             creatorID: req.body.creatorID
         });
         await phone.save();

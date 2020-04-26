@@ -27,8 +27,7 @@ const phoneSchema = new Schema({
     state: {
         type: String,
         required: true,
-        minlength: 2,
-        maxlength: 255
+        minlength: 2
     },
     storageSize: {
         type: Number,

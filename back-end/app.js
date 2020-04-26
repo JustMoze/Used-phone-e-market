@@ -5,10 +5,13 @@ const router = require('./routes/index');
 const userRoute = require('./routes/users');
 const phonesRoute = require('./routes/phones');
 const mongoose = require('mongoose');
+var cors = require('cors');
 const app = express();
 
 // Routes
 app.use(express.json());
+app.use(cors());
+app.use('/uploads', express.static('uploads'));
 app.use('/', router);
 app.use('/api/users', userRoute);
 app.use('/api/phones', phonesRoute);
