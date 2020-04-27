@@ -59,7 +59,12 @@ class App extends Component {
                                 />
                             )}
                         />
-                        <Route path="/phones" component={Phones} />
+                        <Route
+                            path="/phones"
+                            render={(props) => (
+                                <Phones {...props} smallScreen={smallScreen} />
+                            )}
+                        />
                     </Switch>
                 </div>
                 {smallScreen && mainPage ? <Footer /> : null}
