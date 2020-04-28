@@ -314,3 +314,18 @@ footer {
     height: 170px;
     width: 100%;
 }
+/* ------------------------------------------------------------------------------------------*/
+/* Phone detail page */
+/* ------------------------------------------------------------------------------------------*/
+.carouselItem {
+    width: auto;
+    height: 400px;
+}
+.carousel-control-next {
+    width: 8% !important;
+    background-color: #cccebd;
+}
+.carousel-control-prev {
+    width: 8% !important;
+    background-color: #ffcd38;
+}

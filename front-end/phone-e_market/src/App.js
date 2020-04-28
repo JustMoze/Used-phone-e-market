@@ -5,6 +5,7 @@ import Login from './components/Login';
 import Registration from './components/Registration';
 import Phones from './components/Phones';
 import Footer from './components/footer';
+import PhoneDetail from './components/PhoneDetail';
 
 import './App.css';
 
@@ -44,6 +45,10 @@ class App extends Component {
                 <Navbar />
                 <div className="container-fluid" style={{ padding: '2%' }}>
                     <Switch>
+                        <Route
+                            path="/phones/:id"
+                            render={(props) => <PhoneDetail {...props} />}
+                        />
                         <Route
                             path="/login"
                             render={(props) => (

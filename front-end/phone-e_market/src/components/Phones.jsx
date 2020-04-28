@@ -21,16 +21,15 @@ const useStyles = makeStyles((theme) =>
 
 function Phones(props) {
     const [phones, setPhones] = useState([]);
-    const { smallScreen } = props;
+    const { smallScreen, history } = props;
     const classes = useStyles();
     useEffect(() => {
         async function getPhones() {
             const { data: allphones } = await getAllPhones();
-            console.log(allphones);
             setPhones(allphones);
         }
         getPhones();
-    }, []);
+    }, [history]);
     return (
         <div>
             <div className="container">
@@ -51,6 +50,7 @@ function Phones(props) {
                     >
                         <Grid key={index} item>
                             <MediaCard
+                                history={history}
                                 phone={phone}
                                 smallScreen={smallScreen}
                                 className={classes.control}

@@ -38,9 +38,6 @@ export default function MediaCard(props) {
     const { image, phone, smallScreen } = props;
     const { brand, model, state, price } = phone;
     // functions -----------------------------------------------------------------------------
-    function handleInfoClick() {
-        console.log('Icon was clicked');
-    }
     function handleCartClick() {
         console.log('Cart icon was clicked');
     }
@@ -132,7 +129,9 @@ export default function MediaCard(props) {
                         }
                         onMouseOver={handleMouseOverInfo}
                         onMouseOut={handleMouseOutInfo}
-                        onClick={handleInfoClick}
+                        onClick={() =>
+                            props.history.push(`/phones/${phone._id}`)
+                        }
                     />
                 </div>
             </CardActions>
