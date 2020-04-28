@@ -18,7 +18,11 @@ function ImageSlider(props) {
         <Carousel style={{ borderRadius: '25px' }}>
             {sliderImages.map((image, index) => (
                 <Carousel.Item key={index} className="carouselItem">
-                    <img className="d-block" src={image.url} alt={index} />
+                    <img
+                        className="d-block w-100 h-70"
+                        src={image.url}
+                        alt={index}
+                    />
                 </Carousel.Item>
             ))}
         </Carousel>
