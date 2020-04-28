@@ -11,6 +11,11 @@ function ImageSlider(props) {
         images.forEach((image) => {
             imageArr.push({ url: image.path });
         });
+        if (imageArr.length === 0) {
+            imageArr.push({
+                url: 'src/images/defaultPhone.jpg'
+            });
+        }
         setSliderImages(imageArr);
         console.log('Slider images', imageArr);
     }, [images]);
