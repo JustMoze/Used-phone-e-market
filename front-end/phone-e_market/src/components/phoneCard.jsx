@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import EuroIcon from '@material-ui/icons/Euro';
-import InfoIcon from '@material-ui/icons/Info';
 import Typography from '@material-ui/core/Typography';
 import logger from '../services/logService';
+import EditICON from './../common/editIcon';
+import CartICON from './../common/cartIcon';
+import InfoICON from './../common/infoIcon.jsx';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -32,27 +33,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MediaCard(props) {
-    const [mouseOverInfo, setMouseOverInfo] = useState(false);
-    const [mouseOverCart, setMouseOverCart] = useState(false);
     const classes = useStyles();
     const { image, phone, smallScreen } = props;
     const { brand, model, state, price } = phone;
     // functions -----------------------------------------------------------------------------
-    function handleCartClick() {
+    function handleCartIconClick() {
         console.log('Cart icon was clicked');
     }
-    function handleMouseOverInfo() {
-        setMouseOverInfo(true);
+    function handleInfoIconClick() {
+        props.history.push(`/phones/${phone._id}`);
     }
-    function handleMouseOutInfo() {
-        setMouseOverInfo(false);
+    function handleEditIconClick() {
+        props.history.push(`/phones/edit/${phone._id}`);
     }
-    function handleMouseOverCart() {
-        setMouseOverCart(true);
-    }
-    function handleMouseOutCart() {
-        setMouseOverCart(false);
-    }
+
     function formatText(text) {
         var formatString = '';
         if (text.length > 190) {
@@ -79,11 +73,7 @@ export default function MediaCard(props) {
             style={smallScreen ? { minWidth: 200 } : { minWidth: 345 }}
         >
             <CardActionArea>
-                <CardMedia
-                    className={classes.media}
-                    image={image}
-                    title="Contemplative Reptile"
-                />
+                <CardMedia className={classes.media} image={image} />
                 <CardContent className="card-content">
                     <Typography gutterBottom variant="h5" component="h2">
                         {formatTitle(model, brand)}
@@ -103,36 +93,9 @@ export default function MediaCard(props) {
                     <EuroIcon style={{ paddingBottom: '1%' }} />
                 </div>
                 <div className="container-fluid card-icons">
-                    <ShoppingCartIcon
-                        style={
-                            mouseOverCart
-                                ? {
-                                      fontSize: 50,
-                                      cursor: 'pointer',
-                                      color: '#d63447'
-                                  }
-                                : { cursor: 'pointer', fontSize: 40 }
-                        }
-                        onMouseOver={handleMouseOverCart}
-                        onMouseOut={handleMouseOutCart}
-                        onClick={handleCartClick}
-                    />
-                    <InfoIcon
-                        style={
-                            mouseOverInfo
-                                ? {
-                                      fontSize: 50,
-                                      cursor: 'pointer',
-                                      color: '#248B8B'
-                                  }
-                                : { cursor: 'pointer', fontSize: 40 }
-                        }
-                        onMouseOver={handleMouseOverInfo}
-                        onMouseOut={handleMouseOutInfo}
-                        onClick={() =>
-                            props.history.push(`/phones/${phone._id}`)
-                        }
-                    />
+                    <CartICON onClick={handleCartIconClick} />
+                    <InfoICON onClick={handleInfoIconClick} />
+                    <EditICON onClick={handleEditIconClick} />
                 </div>
             </CardActions>
         </Card>

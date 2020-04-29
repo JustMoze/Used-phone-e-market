@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import Grid from '@material-ui/core/Grid';
 function Upload(props) {
     // const [imageUpload, setImageUpload] = useState([]);
     const [imagePaths, setImagePaths] = useState([]);
@@ -20,10 +20,10 @@ function Upload(props) {
         setImagePaths(paths);
     }
     return (
-        <div className="row">
-            <div className="col-md-6">
+        <Grid container spacing={3}>
+            <Grid item lg={6} md={6} xs={12} style={{ padding: '20px' }}>
                 <div className="form-group files">
-                    <label>Upload Your files</label>
+                    <h4>Upload Your files</h4>
                     <input
                         type="file"
                         className="form-control"
@@ -38,17 +38,24 @@ function Upload(props) {
                 >
                     Upload
                 </button>
-            </div>
-            <div className="col-md-6 col-lg-6 col-sm-6">
-                <div className="row">
+            </Grid>
+            <Grid item lg={6} md={6} xs={12}>
+                <Grid container spacing={3}>
                     {imagePaths.map((path, index) => (
-                        <div key={index} className="parent">
+                        <Grid
+                            item
+                            lg={4}
+                            md={6}
+                            xs={12}
+                            key={index}
+                            className="parent"
+                        >
                             <img key={index} alt={index} src={path} />
-                        </div>
+                        </Grid>
                     ))}
-                </div>
-            </div>
-        </div>
+                </Grid>
+            </Grid>
+        </Grid>
     );
 }
 

@@ -10,6 +10,7 @@ import NotFound from './common/notFound';
 import Logout from './common/logout';
 import auth from './services/authService';
 import './App.css';
+import EditPage from './components/EditPage';
 
 class App extends Component {
     constructor(props, context) {
@@ -49,6 +50,10 @@ class App extends Component {
                 <Navbar user={user} />
                 <main className="container-fluid" style={{ padding: '2%' }}>
                     <Switch>
+                        <Route
+                            path="/phones/edit/:id"
+                            render={(props) => <EditPage {...props} />}
+                        />
                         <Route
                             path="/phones/:id"
                             render={(props) => <PhoneDetail {...props} />}
