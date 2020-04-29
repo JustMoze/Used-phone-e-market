@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
+import PropTypes from 'prop-types';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import SearchForm from '../common/searchForm';
 import MediaCard from './phoneCard';
 import Line from '../common/line';
+import Pagination from '../common/pagination';
 import { getAllPhones } from '../services/phoneServices';
+import { paginate } from '../utils/paginate';
 import 'react-toastify/dist/ReactToastify.css';
 
 const useStyles = makeStyles((theme) =>
@@ -21,6 +24,8 @@ const useStyles = makeStyles((theme) =>
 
 function Phones(props) {
     const [phones, setPhones] = useState([]);
+    const [pageSize] = useState(6);
+    const [currentPage, setCurrentPage] = useState(1);
     const { smallScreen, history } = props;
     const classes = useStyles();
     useEffect(() => {
@@ -30,6 +35,12 @@ function Phones(props) {
         }
         getPhones();
     }, [history]);
+    function handlePageChange(page) {
+        setCurrentPage(page);
+    }
+
+    //----------------------------------------------------------
+    const paginatedPhones = paginate(phones, currentPage, pageSize);
     return (
         <div>
             <div className="container">
@@ -38,7 +49,7 @@ function Phones(props) {
             </div>
             <Line color="#ffcd38" />
             <Grid container className={classes.root}>
-                {phones.map((phone, index) => (
+                {paginatedPhones.map((phone, index) => (
                     <Grid
                         key={index}
                         container
@@ -61,8 +72,19 @@ function Phones(props) {
                     </Grid>
                 ))}
             </Grid>
+            <Pagination
+                itemsCount={phones.length}
+                pageSize={pageSize}
+                onPageChange={handlePageChange}
+                currentPage={currentPage}
+            />
         </div>
     );
 }
-
+Pagination.propTypes = {
+    itemsCount: PropTypes.number.isRequired,
+    pageSize: PropTypes.number.isRequired,
+    currentPage: PropTypes.number.isRequired,
+    onPageChange: PropTypes.func.isRequired
+};
 export default Phones;
