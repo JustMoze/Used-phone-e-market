@@ -1,8 +1,12 @@
 import React from 'react';
 import Joi from 'joi-browser';
+import { ToastContainer, toast } from 'react-toastify';
 import Form from './../common/form';
 import registrationPhoto from '../images/reginPhoto.jpg';
 import BackButton from '../common/backButton';
+import * as userService from '../services/userService';
+import auth from '../services/authService';
+import 'react-toastify/dist/ReactToastify.css';
 
 class Registration extends Form {
     state = {
@@ -19,8 +23,19 @@ class Registration extends Form {
         password: Joi.string().min(5).max(1024).required().label('Password')
     };
 
-    doSubmit = () => {
-        console.log('Registered');
+    doSubmit = async () => {
+        try {
+            const response = await userService.register(this.state.data);
+            auth.loginWithJwt(response.headers['x-auth-token']);
+            window.location = '/';
+        } catch (ex) {
+            if (ex.response && ex.response.status === 400) {
+                const errors = { ...this.state.errors };
+                errors.username = ex.response.data;
+                this.setState({ errors });
+                toast.error('User is already registered');
+            }
+        }
     };
     render() {
         const { smallScreen } = this.props;
@@ -32,6 +47,7 @@ class Registration extends Form {
                     )}
                 </div>
                 <div className="col-sm-6 col-md-6 col-lg-6">
+                    <ToastContainer />
                     <div className="row action-btn-div">
                         {smallScreen && <BackButton />}
                     </div>

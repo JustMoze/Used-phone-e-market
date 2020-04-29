@@ -1,12 +1,14 @@
 import React, { Component, Fragment } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Login from './components/Login';
 import Registration from './components/Registration';
 import Phones from './components/Phones';
 import Footer from './components/footer';
 import PhoneDetail from './components/PhoneDetail';
-
+import NotFound from './common/notFound';
+import Logout from './common/logout';
+import auth from './services/authService';
 import './App.css';
 
 class App extends Component {
@@ -20,6 +22,8 @@ class App extends Component {
     }
     componentDidMount() {
         window.addEventListener('resize', this.reportWindowSize);
+        const user = auth.getCurrentUser();
+        this.setState({ user });
     }
     reportWindowSize = () => {
         let smallScreen = window.innerWidth <= 900;
@@ -39,11 +43,11 @@ class App extends Component {
         window.removeEventListener('resize', this.reportWindowSize);
     }
     render() {
-        const { smallScreen, mainPage } = this.state;
+        const { smallScreen, mainPage, user } = this.state;
         return (
             <Fragment>
-                <Navbar />
-                <div className="container-fluid" style={{ padding: '2%' }}>
+                <Navbar user={user} />
+                <main className="container-fluid" style={{ padding: '2%' }}>
                     <Switch>
                         <Route
                             path="/phones/:id"
@@ -70,8 +74,12 @@ class App extends Component {
                                 <Phones {...props} smallScreen={smallScreen} />
                             )}
                         />
+                        <Route path="/logout" component={Logout} />
+                        <Route path="/not-found" component={NotFound} />
+                        <Redirect from="/" exact to="/phones" />
+                        <Redirect to="/not-found" />
                     </Switch>
-                </div>
+                </main>
                 {smallScreen && mainPage ? <Footer /> : null}
             </Fragment>
         );

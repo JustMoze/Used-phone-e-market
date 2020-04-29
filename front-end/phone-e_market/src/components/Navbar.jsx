@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import NavbarLink from './../common/navLinks';
 import Logo from './../common/logo';
 import UserIcon from '../common/userIcon';
 
 function Navbar(props) {
+    const { user } = props;
     return (
         <nav className="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
             <div className="collapse navbar-collapse">
@@ -21,18 +22,29 @@ function Navbar(props) {
                 <ul className="navbar-nav">
                     <NavbarLink label="Phones" to="/phones" />
                 </ul>
-                <ul className="navbar-nav">
-                    <NavbarLink label="Login" to="/login" />
-                </ul>
-                <ul className="navbar-nav">
-                    <NavbarLink label="Register" to="/register" />
-                </ul>
+                {!user && (
+                    <Fragment>
+                        <ul className="navbar-nav">
+                            <NavbarLink label="Login" to="/login" />
+                        </ul>
+                        <ul className="navbar-nav">
+                            <NavbarLink label="Register" to="/register" />
+                        </ul>
+                    </Fragment>
+                )}
             </div>
-            <div className="form-inline my-2 my-lg-0 navUserIcon">
-                <ul className="navbar-nav">
-                    <UserIcon user="Modestas" />
-                </ul>
-            </div>
+            {user && (
+                <Fragment>
+                    <ul className="navbar-nav">
+                        <NavbarLink label="Logout" to="/logout" />
+                    </ul>
+                    <div className="form-inline my-2 my-lg-0 navUserIcon">
+                        <ul className="navbar-nav">
+                            <UserIcon user={user.name} />
+                        </ul>
+                    </div>
+                </Fragment>
+            )}
         </nav>
     );
 }

@@ -3,7 +3,7 @@ import Joi from 'joi-browser';
 import Form from '../common/form';
 import BackButton from '../common/backButton';
 import loginImage from '../images/loginPhoto.jpg';
-
+import auth from '../services/authService';
 class Login extends Form {
     // States ----------------------------------------------
     state = {
@@ -20,9 +20,19 @@ class Login extends Form {
         password: Joi.string().min(5).max(1024).required().label('Password')
     };
 
-    doSubmit = () => {
+    doSubmit = async () => {
         //call server
-        console.log('Submit');
+        try {
+            const { username, password } = this.state.data;
+            await auth.login(username, password);
+            window.location = '/';
+        } catch (ex) {
+            if (ex.response && ex.response.status === 400) {
+                const errors = { ...this.state.errors };
+                errors.username = ex.response.data;
+                this.setState({ errors });
+            }
+        }
     };
     render() {
         const { smallScreen } = this.props;
@@ -40,7 +50,7 @@ class Login extends Form {
                         </div>
                         <h1>Login</h1>
                         <form onSubmit={this.handleOnSubmit}>
-                            {this.renderInput('username', 'Username')}
+                            {this.renderInput('username', 'Email')}
                             {this.renderInput(
                                 'password',
                                 'Password',
