@@ -9,6 +9,7 @@ import Line from '../common/line';
 import Pagination from '../common/pagination';
 import { getAllPhones } from '../services/phoneServices';
 import { paginate } from '../utils/paginate';
+import defaultImage from '../images/defaultPhone.jpg';
 import 'react-toastify/dist/ReactToastify.css';
 
 const useStyles = makeStyles((theme) =>
@@ -66,7 +67,11 @@ function Phones(props) {
                                 smallScreen={smallScreen}
                                 className={classes.control}
                                 key={phone._id}
-                                image={phone.images[0].path}
+                                image={
+                                    phone.images.length > 0
+                                        ? phone.images[0].path
+                                        : defaultImage
+                                }
                             />
                         </Grid>
                     </Grid>

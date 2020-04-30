@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import Joi from 'joi-browser';
+import { Redirect } from 'react-router-dom';
 import Form from '../common/form';
 import BackButton from '../common/backButton';
 import loginImage from '../images/loginPhoto.jpg';
@@ -25,7 +26,8 @@ class Login extends Form {
         try {
             const { username, password } = this.state.data;
             await auth.login(username, password);
-            window.location = '/';
+            const { state } = this.props.location;
+            window.location = state ? state.from.pathname : '/';
         } catch (ex) {
             if (ex.response && ex.response.status === 400) {
                 const errors = { ...this.state.errors };
@@ -36,6 +38,7 @@ class Login extends Form {
     };
     render() {
         const { smallScreen } = this.props;
+        if (auth.getCurrentUser()) return <Redirect to="/" />;
         return (
             <Fragment>
                 <div className="row">

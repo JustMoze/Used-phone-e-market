@@ -1,6 +1,7 @@
 import React from 'react';
 import Joi from 'joi-browser';
 import { ToastContainer, toast } from 'react-toastify';
+import { Redirect } from 'react-router-dom';
 import Form from './../common/form';
 import registrationPhoto from '../images/reginPhoto.jpg';
 import BackButton from '../common/backButton';
@@ -39,6 +40,7 @@ class Registration extends Form {
     };
     render() {
         const { smallScreen } = this.props;
+        if (auth.getCurrentUser()) return <Redirect to="/" />;
         return (
             <div className="row">
                 <div className="col-sm-0 col-md-0 col-lg-6 parentDiv">

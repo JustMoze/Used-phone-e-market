@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
-
+import config from '../config.json';
 function ImageSlider(props) {
     const [sliderImages, setSliderImages] = useState([]);
     const { images } = props;
     useEffect(() => {
         var imageArr = [];
 
-        console.log('images', images);
         images.forEach((image) => {
             imageArr.push({ url: image.path });
         });
         if (imageArr.length === 0) {
             imageArr.push({
-                url: 'src/images/defaultPhone.jpg'
+                url: config.imageUrl
             });
         }
+        console.log('image array -', imageArr);
         setSliderImages(imageArr);
-        console.log('Slider images', imageArr);
     }, [images]);
     return (
         <Carousel style={{ borderRadius: '25px' }}>

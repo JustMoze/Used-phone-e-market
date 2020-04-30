@@ -9,8 +9,9 @@ import PhoneDetail from './components/PhoneDetail';
 import NotFound from './common/notFound';
 import Logout from './common/logout';
 import auth from './services/authService';
-import './App.css';
+import ProtectedRoute from './common/protectedRoute';
 import EditPage from './components/EditPage';
+import './App.css';
 
 class App extends Component {
     constructor(props, context) {
@@ -50,13 +51,13 @@ class App extends Component {
                 <Navbar user={user} />
                 <main className="container-fluid" style={{ padding: '2%' }}>
                     <Switch>
-                        <Route
+                        <ProtectedRoute
                             path="/phones/edit/:id"
-                            render={(props) => <EditPage {...props} />}
+                            component={EditPage}
                         />
-                        <Route
+                        <ProtectedRoute
                             path="/phones/:id"
-                            render={(props) => <PhoneDetail {...props} />}
+                            component={PhoneDetail}
                         />
                         <Route
                             path="/login"

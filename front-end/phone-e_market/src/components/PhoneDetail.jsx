@@ -26,7 +26,6 @@ class PhoneDetail extends Component {
         return data;
     };
     componentDidMount() {
-        console.log('cdm');
         this.setState({ loading: 'true' });
         this.getData().then((data) => {
             this.setState({
