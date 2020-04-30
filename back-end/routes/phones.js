@@ -82,7 +82,7 @@ router.get('/:id', validateObjectId, async (req, res) => {
     res.send(phone);
 });
 
-router.put('/:id', validateObjectId, async (req, res) => {
+router.put('/:id', validateObjectId, auth, async (req, res) => {
     var obj = req.body;
 
     var id = req.params.id;
