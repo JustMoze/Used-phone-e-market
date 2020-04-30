@@ -11,6 +11,7 @@ import logger from '../services/logService';
 import EditICON from './../common/editIcon';
 import CartICON from './../common/cartIcon';
 import InfoICON from './../common/infoIcon.jsx';
+import config from '../config.json';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -66,6 +67,13 @@ export default function MediaCard(props) {
             logger.log(ex);
         }
     }
+    function checkImage() {
+        var imagePath = image;
+        if (image.length < 50) {
+            imagePath = config.dataBaseImages + image;
+        }
+        return imagePath;
+    }
     // functions -----------------------------------------------------------------------------
     return (
         <Card
@@ -73,7 +81,7 @@ export default function MediaCard(props) {
             style={smallScreen ? { minWidth: 200 } : { minWidth: 345 }}
         >
             <CardActionArea>
-                <CardMedia className={classes.media} image={image} />
+                <CardMedia className={classes.media} image={checkImage()} />
                 <CardContent className="card-content">
                     <Typography gutterBottom variant="h5" component="h2">
                         {formatTitle(model, brand)}

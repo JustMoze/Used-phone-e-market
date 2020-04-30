@@ -8,14 +8,17 @@ function ImageSlider(props) {
         var imageArr = [];
 
         images.forEach((image) => {
-            imageArr.push({ url: image.path });
+            if (image.path.length < 50) {
+                imageArr.push({ url: config.dataBaseImages + image.path });
+            } else {
+                imageArr.push({ url: image.path });
+            }
         });
         if (imageArr.length === 0) {
             imageArr.push({
                 url: config.imageUrl
             });
         }
-        console.log('image array -', imageArr);
         setSliderImages(imageArr);
     }, [images]);
     return (

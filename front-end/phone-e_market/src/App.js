@@ -55,9 +55,9 @@ class App extends Component {
                             path="/phones/edit/:id"
                             component={EditPage}
                         />
-                        <ProtectedRoute
+                        <Route
                             path="/phones/:id"
-                            component={PhoneDetail}
+                            render={(props) => <PhoneDetail {...props} />}
                         />
                         <Route
                             path="/login"

@@ -3,14 +3,20 @@ import Joi from 'joi-browser';
 import EditForm from './../common/editForm';
 import Upload from '../common/upload';
 import Line from '../common/line';
-import { getPhone } from '../services/phoneServices';
+import { getPhone, updatePhone } from '../services/phoneServices';
 import CircularIndeterminate from '../common/CircularIndeterminate';
+import SaveButton from '../common/saveButton';
+import SaveDialog from './../common/dialog';
 
 function EditPage(props) {
     const { id } = props.match.params;
     const [phone, setPhone] = useState({});
     const [loading, setLoading] = useState(true);
     const [errors, setErrors] = useState({});
+    const [imagePaths, setImagePaths] = useState([]);
+    const [open, setOpen] = useState(false);
+    var FormData = require('form-data');
+    var formData = new FormData();
 
     var schema = {
         _id: Joi.string(),
@@ -33,6 +39,7 @@ function EditPage(props) {
     useEffect(() => {
         async function getPhones() {
             const { data } = await getPhone(id);
+            data.images = [];
             setPhone(data);
             setLoading(false);
         }
@@ -71,7 +78,55 @@ function EditPage(props) {
             setErrors(currentErrors);
             setPhone(data);
         }
-        console.log('editable phone', phone);
+        function onChangeHandler(e) {
+            const { files: images } = e.target;
+            const paths = [];
+            const uploadImages = [];
+            for (const file of images) {
+                uploadImages.push(file);
+                const imgPath = URL.createObjectURL(file);
+                paths.push(imgPath);
+            }
+            const updatedPhone = { ...phone };
+            updatedPhone.images = uploadImages;
+            setPhone(updatedPhone);
+            setImagePaths(paths);
+        }
+        function handleSave() {
+            handleClickOpen();
+        }
+        const handleClickOpen = () => {
+            setOpen(true);
+        };
+
+        const handleClose = () => {
+            setOpen(false);
+        };
+
+        function handleUpdateClose() {
+            formData.append('_id', phone._id);
+            formData.append('model', phone.model);
+            formData.append('brand', phone.brand);
+            formData.append('screenSize', phone.screenSize);
+            formData.append('RAMsize', phone.RAMsize);
+            formData.append('state', phone.state);
+            formData.append('storageSize', phone.storageSize);
+            formData.append('color', phone.color);
+            formData.append('price', phone.price);
+            phone.images.forEach((image) => {
+                formData.append('images', image);
+            });
+            const config = {
+                headers: { 'content-type': 'multipart/form-data' }
+            };
+            async function handlePhoneUpdate() {
+                const result = await updatePhone(phone, formData, config);
+            }
+            handlePhoneUpdate();
+            props.history.goBack();
+            setOpen(false);
+        }
+
         return (
             <Fragment>
                 <h1>Phone id: {id}</h1>
@@ -84,7 +139,13 @@ function EditPage(props) {
                     <Line color="#ffcd38" />
                 </div>
 
-                <Upload />
+                <Upload onChange={onChangeHandler} imagePaths={imagePaths} />
+                <SaveDialog
+                    handleClose={handleClose}
+                    open={open}
+                    handleClickSave={handleUpdateClose}
+                />
+                <SaveButton onClick={handleSave} />
             </Fragment>
         );
     }

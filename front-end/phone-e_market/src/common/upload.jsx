@@ -1,24 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Grid from '@material-ui/core/Grid';
 function Upload(props) {
-    // const [imageUpload, setImageUpload] = useState([]);
-    const [imagePaths, setImagePaths] = useState([]);
-    function onClickHandler() {
-        console.log('Button was clicked');
-    }
-    function onChangeHandler(e) {
-        console.log(e.target.files);
-        const { files: images } = e.target;
-        console.log('Images', images);
-        // setImageUpload(images);
-        const paths = [];
-
-        for (const file of images) {
-            const imgPath = URL.createObjectURL(file);
-            paths.push(imgPath);
-        }
-        setImagePaths(paths);
-    }
+    const { onChange, imagePaths } = props;
     return (
         <Grid container spacing={3}>
             <Grid item lg={6} md={6} xs={12} style={{ padding: '20px' }}>
@@ -28,16 +11,9 @@ function Upload(props) {
                         type="file"
                         className="form-control"
                         multiple
-                        onChange={onChangeHandler}
+                        onChange={onChange}
                     />
                 </div>
-                <button
-                    type="button"
-                    className="btn btn-success btn-block"
-                    onClick={onClickHandler}
-                >
-                    Upload
-                </button>
             </Grid>
             <Grid item lg={6} md={6} xs={12}>
                 <Grid container spacing={3}>
