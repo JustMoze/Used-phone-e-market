@@ -68,7 +68,7 @@ router.delete('/:id', [auth], async (req, res) => {
     const phone = await Phone.findByIdAndDelete(req.params.id);
 
     if (!phone)
-        return res.status(400).send('The movie with given ID was not found');
+        return res.status(400).send('The phone with given ID was not found');
 
     res.send(phone);
 });
@@ -77,7 +77,21 @@ router.get('/:id', validateObjectId, async (req, res) => {
     const phone = await Phone.findById(req.params.id).select('-__v');
 
     if (!phone) {
-        return res.status(404).send('The movie with given ID was not found');
+        return res.status(404).send('The phone with given ID was not found');
+    }
+    res.send(phone);
+});
+
+router.put('/:id', validateObjectId, async (req, res) => {
+    var obj = req.body;
+
+    var id = req.params.id;
+    const phone = await Phone.findByIdAndUpdate({ _id: id }, obj, {
+        useFindAndModify: false,
+        upsert: true
+    });
+    if (!phone) {
+        return res.status(404).send('The phone with given ID was not found');
     }
     res.send(phone);
 });
