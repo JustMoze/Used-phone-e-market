@@ -8,7 +8,7 @@ function ImageSlider(props) {
         var imageArr = [];
 
         images.forEach((image) => {
-            if (image.path.length < 50) {
+            if (image.path.length < 40) {
                 imageArr.push({ url: config.dataBaseImages + image.path });
             } else {
                 imageArr.push({ url: image.path });

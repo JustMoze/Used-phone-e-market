@@ -69,7 +69,7 @@ export default function MediaCard(props) {
     }
     function checkImage() {
         var imagePath = image;
-        if (image.length < 50) {
+        if (image.length < 40) {
             imagePath = config.dataBaseImages + image;
         }
         return imagePath;
