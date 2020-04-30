@@ -73,7 +73,6 @@ router.delete('/:id', [auth], async (req, res) => {
     res.send(phone);
 });
 router.get('/:id', validateObjectId, async (req, res) => {
-    console.log('req paramas', req.params);
     const phone = await Phone.findById(req.params.id).select('-__v');
 
     if (!phone) {
@@ -82,18 +81,41 @@ router.get('/:id', validateObjectId, async (req, res) => {
     res.send(phone);
 });
 
-router.put('/:id', validateObjectId, auth, async (req, res) => {
-    var obj = req.body;
+router.put(
+    '/:id',
+    validateObjectId,
+    auth,
+    upload.array('images', 7),
+    async (req, res) => {
+        try {
+            var obj = req.body;
+            const imageArray = [];
+            var id = req.params.id;
+            var phone = {};
+            console.log('failai - ', req.files);
+            if (req.files) {
+                req.files.map((image) => {
+                    const correctPath = String(image.path);
+                    imageArray.push({ path: correctPath.replace('\\', '/') });
+                });
+                obj.images = imageArray;
+            }
+            console.log('Objektas', obj);
+            phone = await Phone.findByIdAndUpdate({ _id: id }, obj, {
+                useFindAndModify: false,
+                upsert: true
+            });
 
-    var id = req.params.id;
-    const phone = await Phone.findByIdAndUpdate({ _id: id }, obj, {
-        useFindAndModify: false,
-        upsert: true
-    });
-    if (!phone) {
-        return res.status(404).send('The phone with given ID was not found');
+            if (!phone) {
+                return res
+                    .status(404)
+                    .send('The phone with given ID was not found');
+            }
+            res.send(phone);
+        } catch (ex) {
+            console.log('Occured eror', ex);
+        }
     }
-    res.send(phone);
-});
+);
 
 module.exports = router;
