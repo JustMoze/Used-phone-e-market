@@ -32,9 +32,7 @@ router.get('/', async (req, res) => {
     res.send(phones);
 });
 
-router.post('/', [auth], upload.array('images', 7), async (req, res) => {
-    console.log('re files -', req.files);
-    console.log('request body - ', req.body);
+router.post('/', [auth], upload.array('images'), async (req, res) => {
     const { error } = validate(req.body);
     if (error) {
         return res.status(400).send(error.details[0].message);
@@ -85,14 +83,13 @@ router.put(
     '/:id',
     validateObjectId,
     auth,
-    upload.array('images', 7),
+    upload.array('images'),
     async (req, res) => {
         try {
             var obj = req.body;
             const imageArray = [];
             var id = req.params.id;
             var phone = {};
-            console.log('failai - ', req.files);
             if (req.files) {
                 req.files.map((image) => {
                     const correctPath = String(image.path);
@@ -100,7 +97,6 @@ router.put(
                 });
                 obj.images = imageArray;
             }
-            console.log('Objektas', obj);
             phone = await Phone.findByIdAndUpdate({ _id: id }, obj, {
                 useFindAndModify: false,
                 upsert: true
