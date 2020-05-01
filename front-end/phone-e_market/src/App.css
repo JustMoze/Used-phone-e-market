@@ -358,3 +358,14 @@ footer {
 .MuiInputBase-fullWidth {
     height: 100%;
 }
+
+.phones_title {
+    color: #343a40;
+    font-family: 'Bangers', cursive;
+    font-size: 4.5rem;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 44px;
+    margin: 0 0 12px;
+    text-align: center;
+}

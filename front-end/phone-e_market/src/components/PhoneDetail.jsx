@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
-import Tooltip from '@material-ui/core/Tooltip';
-import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { getPhone } from '../services/phoneServices';
 import ImageSlider from '../common/imageSlider';
@@ -16,7 +14,6 @@ class PhoneDetail extends Component {
         this.state = {
             loading: 'initial',
             phone: {},
-            addToCart: false,
             goBack: false
         };
     }
@@ -47,10 +44,8 @@ class PhoneDetail extends Component {
         this.setState({ goBack: false });
     };
     render() {
-        const { addToCart, goBack } = this.state;
+        const { goBack } = this.state;
         const { loading, phone } = this.state;
-        var cartIconStyle;
-        var tooltipTitle;
         var backIconStyle;
         if (this.state.loading === 'initial') {
             return (
@@ -71,20 +66,6 @@ class PhoneDetail extends Component {
                     <CircularIndeterminate />
                 </div>
             );
-        }
-        if (addToCart) {
-            cartIconStyle = {
-                fontSize: 50,
-                cursor: 'pointer',
-                color: '#06623b'
-            };
-            tooltipTitle = 'Remove from cart';
-        } else {
-            cartIconStyle = {
-                fontSize: 50,
-                cursor: 'pointer'
-            };
-            tooltipTitle = 'Add to cart';
         }
 
         if (goBack) {
@@ -122,14 +103,6 @@ class PhoneDetail extends Component {
                                 label="Detail information: "
                                 data={phone.state}
                             />
-                        </Grid>
-                        <Grid item lg={4} md={2} xs={2}>
-                            <Tooltip title={tooltipTitle}>
-                                <ShoppingBasketIcon
-                                    onClick={this.handleAddToCart}
-                                    style={cartIconStyle}
-                                />
-                            </Tooltip>
                         </Grid>
                     </Grid>
                 </Grid>

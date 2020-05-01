@@ -6,6 +6,7 @@ import Line from '../common/line';
 import { getPhone, updatePhone } from '../services/phoneServices';
 import CircularIndeterminate from '../common/CircularIndeterminate';
 import SaveButton from '../common/saveButton';
+import { formPhoneData } from '../utils/formPhoneData';
 import SaveDialog from './../common/dialog';
 
 function EditPage(props) {
@@ -49,16 +50,6 @@ function EditPage(props) {
     if (loading) {
         return <CircularIndeterminate />;
     } else {
-        // function validate() {
-        //     const options = { abortEarly: false };
-        //     const { error } = Joi.validate(phone, schema, options);
-        //     if (!error) return null;
-
-        //     const errors = {};
-        //     for (let item of error.details) errors[item.path[0]] = item.message;
-        //     return errors;
-        // }
-
         function validateProperty({ name, value }) {
             const obj = { [name]: value };
             const definedSchema = { [name]: schema[name] };
@@ -104,23 +95,12 @@ function EditPage(props) {
         };
 
         function handleUpdateClose() {
-            formData.append('_id', phone._id);
-            formData.append('model', phone.model);
-            formData.append('brand', phone.brand);
-            formData.append('screenSize', phone.screenSize);
-            formData.append('RAMsize', phone.RAMsize);
-            formData.append('state', phone.state);
-            formData.append('storageSize', phone.storageSize);
-            formData.append('color', phone.color);
-            formData.append('price', phone.price);
-            phone.images.forEach((image) => {
-                formData.append('images', image);
-            });
+            formData = formPhoneData(phone);
             const config = {
                 headers: { 'content-type': 'multipart/form-data' }
             };
             async function handlePhoneUpdate() {
-                const result = await updatePhone(phone, formData, config);
+                await updatePhone(phone, formData, config);
             }
             handlePhoneUpdate();
             props.history.goBack();

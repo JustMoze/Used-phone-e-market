@@ -77,7 +77,11 @@ class App extends Component {
                         <Route
                             path="/phones"
                             render={(props) => (
-                                <Phones {...props} smallScreen={smallScreen} />
+                                <Phones
+                                    {...props}
+                                    smallScreen={smallScreen}
+                                    user={user}
+                                />
                             )}
                         />
                         <Route path="/logout" component={Logout} />

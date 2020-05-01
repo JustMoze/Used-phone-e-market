@@ -9,7 +9,6 @@ import EuroIcon from '@material-ui/icons/Euro';
 import Typography from '@material-ui/core/Typography';
 import logger from '../services/logService';
 import EditICON from './../common/editIcon';
-import CartICON from './../common/cartIcon';
 import InfoICON from './../common/infoIcon.jsx';
 import config from '../config.json';
 
@@ -35,12 +34,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MediaCard(props) {
     const classes = useStyles();
-    const { image, phone, smallScreen } = props;
+    const { image, phone, smallScreen, user } = props;
     const { brand, model, state, price } = phone;
+
     // functions -----------------------------------------------------------------------------
-    function handleCartIconClick() {
-        console.log('Cart icon was clicked');
-    }
     function handleInfoIconClick() {
         props.history.push(`/phones/${phone._id}`);
     }
@@ -101,9 +98,10 @@ export default function MediaCard(props) {
                     <EuroIcon style={{ paddingBottom: '1%' }} />
                 </div>
                 <div className="container-fluid card-icons">
-                    <CartICON onClick={handleCartIconClick} />
                     <InfoICON onClick={handleInfoIconClick} />
-                    <EditICON onClick={handleEditIconClick} />
+                    {phone.creatorID === user._id ? (
+                        <EditICON onClick={handleEditIconClick} />
+                    ) : null}
                 </div>
             </CardActions>
         </Card>

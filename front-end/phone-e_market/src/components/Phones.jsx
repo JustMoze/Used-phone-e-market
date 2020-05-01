@@ -5,11 +5,12 @@ import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import SearchForm from '../common/searchForm';
 import MediaCard from './phoneCard';
-import Line from '../common/line';
 import Pagination from '../common/pagination';
 import { getAllPhones } from '../services/phoneServices';
 import { paginate } from '../utils/paginate';
 import defaultImage from '../images/defaultPhone.jpg';
+import FilterOptions from '../common/filterOptions';
+import Title from '../common/title';
 import 'react-toastify/dist/ReactToastify.css';
 
 const useStyles = makeStyles((theme) =>
@@ -27,7 +28,8 @@ function Phones(props) {
     const [phones, setPhones] = useState([]);
     const [pageSize] = useState(6);
     const [currentPage, setCurrentPage] = useState(1);
-    const { smallScreen, history } = props;
+    const [filterName, setFilterName] = useState('all');
+    const { smallScreen, user, history } = props;
     const classes = useStyles();
     useEffect(() => {
         async function getPhones() {
@@ -39,16 +41,41 @@ function Phones(props) {
     function handlePageChange(page) {
         setCurrentPage(page);
     }
-
+    function handleFilterClick(name) {
+        setFilterName(name);
+    }
+    function filterPhones() {
+        const phonesToFilter = [...phones];
+        if (filterName === 'game') {
+            return phonesToFilter.filter(
+                (phone) =>
+                    phone.screenSize > 6 &&
+                    phone.RAMsize >= 4 &&
+                    phone.storageSize >= 128
+            );
+        } else if (filterName === 'cheap') {
+            return phonesToFilter.sort(
+                (phone1, phone2) => phone1.price - phone2.price
+            );
+        } else return null;
+    }
     //----------------------------------------------------------
-    const paginatedPhones = paginate(phones, currentPage, pageSize);
+    const paginatedPhones = paginate(
+        filterPhones() || phones,
+        currentPage,
+        pageSize
+    );
     return (
         <div>
             <div className="container">
                 <ToastContainer />
                 <SearchForm type="text" placeholder="Search" />
             </div>
-            <Line color="#ffcd38" />
+            <Title />
+            <FilterOptions
+                onClick={handleFilterClick}
+                filterName={filterName}
+            />
             <Grid container className={classes.root}>
                 {paginatedPhones.map((phone, index) => (
                     <Grid
@@ -62,6 +89,7 @@ function Phones(props) {
                     >
                         <Grid key={index} item>
                             <MediaCard
+                                user={user}
                                 history={history}
                                 phone={phone}
                                 smallScreen={smallScreen}
