@@ -55,10 +55,10 @@ function validatePhone(phone) {
     const schema = {
         brand: Joi.string().required(),
         model: Joi.string().min(2).required(),
-        screenSize: Joi.number().positive().required(),
-        RAMsize: Joi.number().positive().required(),
+        screenSize: Joi.number().positive().required().min(3),
+        RAMsize: Joi.number().positive().required().min(1),
         state: Joi.string().required(),
-        storageSize: Joi.number().positive().required(),
+        storageSize: Joi.number().positive().required().min(16),
         color: Joi.string().required(),
         price: Joi.number().positive().required(),
         images: Joi.array().items(

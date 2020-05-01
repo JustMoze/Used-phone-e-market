@@ -39,10 +39,12 @@ router.post('/', [auth], upload.array('images'), async (req, res) => {
     }
     try {
         const imageArray = [];
-        req.files.map((image) => {
-            const correctPath = String(image.path);
-            imageArray.push({ path: correctPath.replace('\\', '/') });
-        });
+        if (req.files) {
+            req.files.map((image) => {
+                const correctPath = String(image.path);
+                imageArray.push({ path: correctPath.replace('\\', '/') });
+            });
+        }
         const phone = new Phone({
             brand: req.body.brand,
             model: req.body.model,
