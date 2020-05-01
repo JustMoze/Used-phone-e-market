@@ -99,7 +99,7 @@ export default function MediaCard(props) {
                 </div>
                 <div className="container-fluid card-icons">
                     <InfoICON onClick={handleInfoIconClick} />
-                    {phone.creatorID === user._id ? (
+                    {user && phone.creatorID === user._id ? (
                         <EditICON onClick={handleEditIconClick} />
                     ) : null}
                 </div>

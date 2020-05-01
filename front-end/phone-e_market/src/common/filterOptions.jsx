@@ -3,9 +3,18 @@ import { Grid, Button } from '@material-ui/core';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
 import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
+import AddButton from './floatingAddButton';
 
 function FilterOptions(props) {
-    const { onClick, cheapName, gameName, allName, filterName } = props;
+    const {
+        onClick,
+        cheapName,
+        gameName,
+        allName,
+        filterName,
+        screen,
+        onAddClick
+    } = props;
     var ifActive = { width: '100%', backgroundColor: '#9bdf46' };
     var nonActive = { width: '100%' };
     return (
@@ -45,6 +54,15 @@ function FilterOptions(props) {
                 >
                     All phones
                 </Button>
+            </Grid>
+            <Grid
+                item
+                lg={6}
+                md={2}
+                xs={3}
+                style={screen ? { textAlign: 'start' } : { textAlign: 'end' }}
+            >
+                <AddButton onClick={onAddClick} label="Add new phone" />
             </Grid>
         </Grid>
     );

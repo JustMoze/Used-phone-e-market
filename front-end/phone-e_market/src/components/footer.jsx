@@ -19,7 +19,7 @@ export default function Footer() {
     const [value, setValue] = React.useState(0);
 
     return (
-        <footer>
+        <footer style={{ position: 'inherit' }}>
             <div className="mx-auto container-fluid">
                 <BottomNavigation
                     value={value}

@@ -4,13 +4,13 @@ import Navbar from './components/Navbar';
 import Login from './components/Login';
 import Registration from './components/Registration';
 import Phones from './components/Phones';
-import Footer from './components/footer';
 import PhoneDetail from './components/PhoneDetail';
 import NotFound from './common/notFound';
 import Logout from './common/logout';
 import auth from './services/authService';
 import ProtectedRoute from './common/protectedRoute';
 import EditPage from './components/EditPage';
+import AddPhone from './components/addPhone';
 import './App.css';
 
 class App extends Component {
@@ -34,9 +34,10 @@ class App extends Component {
         } else {
             this.setState({ smallScreen: false });
         }
-        const path = window.location.href.slice(-1);
-        if (path === '0' || path === '/') this.setState({ mainPage: true });
-        else this.setState({ mainPage: false });
+        const phonePath = window.location.href.slice(-7);
+        if (phonePath === '/phones') {
+            this.setState({ mainPage: true });
+        } else this.setState({ mainPage: false });
     };
     componentDidUpdate() {
         window.addEventListener('resize', this.reportWindowSize);
@@ -51,6 +52,10 @@ class App extends Component {
                 <Navbar user={user} />
                 <main className="container-fluid" style={{ padding: '2%' }}>
                     <Switch>
+                        <ProtectedRoute
+                            path="/phones/add"
+                            component={AddPhone}
+                        />
                         <ProtectedRoute
                             path="/phones/edit/:id"
                             component={EditPage}
@@ -81,6 +86,7 @@ class App extends Component {
                                     {...props}
                                     smallScreen={smallScreen}
                                     user={user}
+                                    mainPage={mainPage}
                                 />
                             )}
                         />
@@ -90,7 +96,6 @@ class App extends Component {
                         <Redirect to="/not-found" />
                     </Switch>
                 </main>
-                {smallScreen && mainPage ? <Footer /> : null}
             </Fragment>
         );
     }

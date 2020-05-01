@@ -109,7 +109,6 @@ function EditPage(props) {
 
         return (
             <Fragment>
-                <h1>Phone id: {id}</h1>
                 <EditForm
                     phone={phone}
                     onChange={handleInputChange}

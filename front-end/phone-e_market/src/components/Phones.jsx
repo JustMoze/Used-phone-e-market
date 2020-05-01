@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import { ToastContainer } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
@@ -11,6 +11,7 @@ import { paginate } from '../utils/paginate';
 import defaultImage from '../images/defaultPhone.jpg';
 import FilterOptions from '../common/filterOptions';
 import Title from '../common/title';
+import Footer from './footer';
 import 'react-toastify/dist/ReactToastify.css';
 
 const useStyles = makeStyles((theme) =>
@@ -29,7 +30,7 @@ function Phones(props) {
     const [pageSize] = useState(6);
     const [currentPage, setCurrentPage] = useState(1);
     const [filterName, setFilterName] = useState('all');
-    const { smallScreen, user, history } = props;
+    const { smallScreen, user, history, mainPage } = props;
     const classes = useStyles();
     useEffect(() => {
         async function getPhones() {
@@ -59,6 +60,9 @@ function Phones(props) {
             );
         } else return null;
     }
+    function handleAddPhone() {
+        props.history.push('/phones/add');
+    }
     //----------------------------------------------------------
     const paginatedPhones = paginate(
         filterPhones() || phones,
@@ -66,52 +70,57 @@ function Phones(props) {
         pageSize
     );
     return (
-        <div>
-            <div className="container">
-                <ToastContainer />
-                <SearchForm type="text" placeholder="Search" />
-            </div>
-            <Title />
-            <FilterOptions
-                onClick={handleFilterClick}
-                filterName={filterName}
-            />
-            <Grid container className={classes.root}>
-                {paginatedPhones.map((phone, index) => (
-                    <Grid
-                        key={index}
-                        container
-                        item
-                        lg={4}
-                        md={6}
-                        xs={12}
-                        justify="center"
-                    >
-                        <Grid key={index} item>
-                            <MediaCard
-                                user={user}
-                                history={history}
-                                phone={phone}
-                                smallScreen={smallScreen}
-                                className={classes.control}
-                                key={phone._id}
-                                image={
-                                    phone.images.length > 0
-                                        ? phone.images[0].path
-                                        : defaultImage
-                                }
-                            />
+        <Fragment>
+            <div>
+                <div className="container">
+                    <ToastContainer />
+                    <SearchForm type="text" placeholder="Search" />
+                </div>
+                <Title />
+                <FilterOptions
+                    onClick={handleFilterClick}
+                    filterName={filterName}
+                    screen={smallScreen}
+                    onAddClick={handleAddPhone}
+                />
+                <Grid container className={classes.root}>
+                    {paginatedPhones.map((phone, index) => (
+                        <Grid
+                            key={index}
+                            container
+                            item
+                            lg={4}
+                            md={6}
+                            xs={12}
+                            justify="center"
+                        >
+                            <Grid key={index} item>
+                                <MediaCard
+                                    user={user}
+                                    history={history}
+                                    phone={phone}
+                                    smallScreen={smallScreen}
+                                    className={classes.control}
+                                    key={phone._id}
+                                    image={
+                                        phone.images.length > 0
+                                            ? phone.images[0].path
+                                            : defaultImage
+                                    }
+                                />
+                            </Grid>
                         </Grid>
-                    </Grid>
-                ))}
-            </Grid>
-            <Pagination
-                itemsCount={phones.length}
-                pageSize={pageSize}
-                onPageChange={handlePageChange}
-                currentPage={currentPage}
-            />
-        </div>
+                    ))}
+                </Grid>
+                <Pagination
+                    itemsCount={phones.length}
+                    pageSize={pageSize}
+                    onPageChange={handlePageChange}
+                    currentPage={currentPage}
+                />
+            </div>
+            {smallScreen && mainPage && !user ? <Footer /> : null}
+        </Fragment>
     );
 }
 Pagination.propTypes = {
