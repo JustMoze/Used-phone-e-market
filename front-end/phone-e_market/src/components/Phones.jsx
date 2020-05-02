@@ -1,6 +1,5 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import { ToastContainer } from 'react-toastify';
-import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
