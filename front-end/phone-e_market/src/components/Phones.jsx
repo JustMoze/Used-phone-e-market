@@ -1,5 +1,6 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import { ToastContainer } from 'react-toastify';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -30,6 +31,7 @@ function Phones(props) {
     const [pageSize] = useState(6);
     const [currentPage, setCurrentPage] = useState(1);
     const [filterName, setFilterName] = useState('all');
+    const [searchQuerry, setSearchQuerry] = useState('');
     const { smallScreen, user, history, mainPage } = props;
     const classes = useStyles();
     useEffect(() => {
@@ -58,10 +60,29 @@ function Phones(props) {
             return phonesToFilter.sort(
                 (phone1, phone2) => phone1.price - phone2.price
             );
+        } else if (searchQuerry) {
+            return phones.filter(
+                (phone) =>
+                    phone.model
+                        .toLowerCase()
+                        .startsWith(searchQuerry.toLocaleLowerCase()) ||
+                    phone.brand
+                        .toLowerCase()
+                        .startsWith(searchQuerry.toLocaleLowerCase()) ||
+                    phone.state
+                        .toLowerCase()
+                        .startsWith(searchQuerry.toLocaleLowerCase()) ||
+                    phone.color
+                        .toLowerCase()
+                        .startsWith(searchQuerry.toLocaleLowerCase())
+            );
         } else return null;
     }
     function handleAddPhone() {
         props.history.push('/phones/add');
+    }
+    function handleSearchQuerries(searchQuerry) {
+        setSearchQuerry(searchQuerry);
     }
     //----------------------------------------------------------
     const paginatedPhones = paginate(
@@ -74,7 +95,12 @@ function Phones(props) {
             <div>
                 <div className="container">
                     <ToastContainer />
-                    <SearchForm type="text" placeholder="Search" />
+                    <SearchForm
+                        type="text"
+                        placeholder="Search..."
+                        onChange={handleSearchQuerries}
+                        value={searchQuerry}
+                    />
                 </div>
                 <Title />
                 <FilterOptions
@@ -113,7 +139,11 @@ function Phones(props) {
                     ))}
                 </Grid>
                 <Pagination
-                    itemsCount={phones.length}
+                    itemsCount={
+                        filterName === 'game' || searchQuerry
+                            ? paginatedPhones.length
+                            : phones.length
+                    }
                     pageSize={pageSize}
                     onPageChange={handlePageChange}
                     currentPage={currentPage}
