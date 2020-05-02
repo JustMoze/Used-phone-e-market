@@ -10,9 +10,10 @@ export function getAllPhones() {
 export function getPhone(phoneID) {
     return http.get(specificPhoneAPI + phoneID);
 }
-export function createPhone(formData, header) {
-    console.log('header - ', header);
-    return http.post(specificPhoneAPI, formData, header);
+export function createPhone(formData) {
+    return http.post(specificPhoneAPI, formData, {
+        'Content-Type': 'multipart/form-data'
+    });
 }
 export function updatePhone(phone, formdata, header) {
     const id = phone._id;

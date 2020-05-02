@@ -1,7 +1,8 @@
 var FormData = require('form-data');
 var formData = new FormData();
 
-export function formPhoneData(phone) {
+export function formNewPhoneData(phone) {
+    console.log('phone own id', phone.creatorID);
     formData.append('model', phone.model);
     formData.append('brand', phone.brand);
     formData.append('screenSize', phone.screenSize);
@@ -13,6 +14,7 @@ export function formPhoneData(phone) {
     phone.images.forEach((image) => {
         formData.append('images', image);
     });
+    formData.append('creatorID', phone.creatorID);
     return formData;
 }
-export default formPhoneData;
+export default formNewPhoneData;

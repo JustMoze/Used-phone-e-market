@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
 import Joi from 'joi-browser';
 import EditForm from './../common/editForm';
 import Upload from '../common/upload';
@@ -6,10 +6,11 @@ import Line from '../common/line';
 import SaveButton from '../common/saveButton';
 import SaveDialog from './../common/dialog';
 import auth from '../services/authService';
-import { formPhoneData } from '../utils/formNewPhoneData';
+import { formNewPhoneData } from '../utils/formNewPhoneData';
 import { createPhone } from './../services/phoneServices';
 
 function AddPhone(props) {
+    const { _id: ownerID } = auth.getCurrentUser();
     const [phone, setPhone] = useState({
         model: '',
         brand: '',
@@ -20,7 +21,7 @@ function AddPhone(props) {
         color: '',
         price: '',
         images: [],
-        creatorID: ''
+        creatorID: ownerID
     });
     const [errors, setErrors] = useState({});
     const [imagePaths, setImagePaths] = useState([]);
@@ -43,7 +44,7 @@ function AddPhone(props) {
                 path: Joi.string()
             })
         ),
-        creatorID: Joi.string().required()
+        creatorID: Joi.string()
     };
 
     function validateProperty({ name, value }) {
@@ -101,21 +102,15 @@ function AddPhone(props) {
     };
 
     function handleUpdateClose() {
-        const { _id: ownerId } = auth.getCurrentUser();
-        phone.creatorID = ownerId;
-        console.log('curr phone', phone);
         const currentErrors = validate();
         setErrors(currentErrors || {});
         if (currentErrors) {
             setOpen(false);
             return;
         }
-        formData = formPhoneData(phone);
-        const config = {
-            'Content-Type': 'multipart/form-data'
-        };
+        formData = formNewPhoneData(phone);
         async function addNewPhone() {
-            await createPhone(phone, formData, config);
+            await createPhone(formData, ownerID);
         }
         addNewPhone();
         props.history.goBack();
