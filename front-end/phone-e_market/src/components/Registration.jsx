@@ -8,6 +8,7 @@ import BackButton from '../common/backButton';
 import * as userService from '../services/userService';
 import auth from '../services/authService';
 import 'react-toastify/dist/ReactToastify.css';
+import SaveDialog from '../common/dialog';
 
 class Registration extends Form {
     state = {
@@ -16,6 +17,7 @@ class Registration extends Form {
             email: '',
             password: ''
         },
+        open: false,
         errors: {}
     };
     schema = {
@@ -26,9 +28,9 @@ class Registration extends Form {
 
     doSubmit = async () => {
         try {
+            this.handleClickOpen();
             const response = await userService.register(this.state.data);
             auth.loginWithJwt(response.headers['x-auth-token']);
-            window.location = '/';
         } catch (ex) {
             if (ex.response && ex.response.status === 400) {
                 const errors = { ...this.state.errors };
@@ -38,8 +40,20 @@ class Registration extends Form {
             }
         }
     };
+    handleClickOpen = () => {
+        console.log('open dialog', this.state.open);
+        this.setState({ open: true });
+        console.log('open dialog 2', this.state.open);
+    };
+    handleClose = () => {
+        this.setState({ open: false });
+    };
     render() {
         const { smallScreen } = this.props;
+        const { open } = this.state;
+        console.log('open prop', open);
+        var text =
+            'Please go to your email address and click on email verification link that we send to you';
         if (auth.getCurrentUser()) return <Redirect to="/" />;
         return (
             <div className="row">
@@ -54,6 +68,14 @@ class Registration extends Form {
                         {smallScreen && <BackButton />}
                     </div>
                     <h1>Register</h1>
+                    <SaveDialog
+                        handleClose={this.handleClose}
+                        open={open}
+                        title="Email validation!"
+                        text={text}
+                        show={false}
+                        handleClickSave={this.handleClose}
+                    />
                     <form onSubmit={this.handleOnSubmit}>
                         {this.renderInput('username', 'Username')}
                         {this.renderInput('email', 'Email', 'email')}

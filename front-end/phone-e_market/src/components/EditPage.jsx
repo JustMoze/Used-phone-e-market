@@ -16,6 +16,8 @@ function EditPage(props) {
     const [errors, setErrors] = useState({});
     const [imagePaths, setImagePaths] = useState([]);
     const [open, setOpen] = useState(false);
+    var text =
+        "If you didn't upload pictures your phone will be presented with default image and in the detail page, it won't have any pictures.";
     var FormData = require('form-data');
     var formData = new FormData();
 
@@ -122,6 +124,8 @@ function EditPage(props) {
                 <SaveDialog
                     handleClose={handleClose}
                     open={open}
+                    title="Without an upload - NO IMAGES!"
+                    text={text}
                     handleClickSave={handleUpdateClose}
                 />
                 <SaveButton onClick={handleSave} />

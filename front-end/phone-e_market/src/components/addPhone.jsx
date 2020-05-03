@@ -27,6 +27,8 @@ function AddPhone(props) {
     const [imagePaths, setImagePaths] = useState([]);
     const [open, setOpen] = useState(false);
     var FormData = require('form-data');
+    var text =
+        "If you didn't upload pictures your phone will be presented with default image and in the detail page, it won't have any pictures.";
     var formData = new FormData();
 
     var schema = {
@@ -132,6 +134,8 @@ function AddPhone(props) {
             <SaveDialog
                 handleClose={handleClose}
                 open={open}
+                title="Without an upload - NO IMAGES!"
+                text={text}
                 handleClickSave={handleUpdateClose}
             />
             <SaveButton onClick={handleSave} />

@@ -7,7 +7,14 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 function SaveDialog(props) {
-    const { handleClose, open, handleClickSave } = props;
+    const {
+        handleClose,
+        open,
+        handleClickSave,
+        text,
+        title,
+        show = true
+    } = props;
     return (
         <div>
             <Dialog
@@ -20,22 +27,22 @@ function SaveDialog(props) {
                     id="alert-dialog-title"
                     style={{ backgroundColor: '#cccebd' }}
                 >
-                    {'Without an upload - NO IMAGES!'}
+                    {title}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        If you didn't upload pictures your phone will be
-                        presented with default image and in the detail page, it
-                        won't have any pictures.
+                        {text}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button
-                        onClick={handleClose}
-                        style={{ backgroundColor: '#ffcd38' }}
-                    >
-                        Go back
-                    </Button>
+                    {show && (
+                        <Button
+                            onClick={handleClose}
+                            style={{ backgroundColor: '#ffcd38' }}
+                        >
+                            Go back
+                        </Button>
+                    )}
                     <Button
                         onClick={handleClickSave}
                         style={{ backgroundColor: '#9bdf46' }}

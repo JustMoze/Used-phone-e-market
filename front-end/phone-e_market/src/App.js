@@ -12,6 +12,7 @@ import ProtectedRoute from './common/protectedRoute';
 import EditPage from './components/EditPage';
 import AddPhone from './components/addPhone';
 import './App.css';
+import EmailMessage from './common/emailMessage';
 
 class App extends Component {
     constructor(props, context) {
@@ -91,6 +92,7 @@ class App extends Component {
                             )}
                         />
                         <Route path="/logout" component={Logout} />
+                        <Route path="/verification" component={EmailMessage} />
                         <Route path="/not-found" component={NotFound} />
                         <Redirect from="/" exact to="/phones" />
                         <Redirect to="/not-found" />
