@@ -38,6 +38,11 @@ const phoneSchema = new Schema({
         type: String,
         required: true
     },
+    phoneNumber: {
+        type: String,
+        minlength: 7,
+        required: true
+    },
     price: {
         type: Number,
         required: true,
@@ -60,6 +65,7 @@ function validatePhone(phone) {
         state: Joi.string().required(),
         storageSize: Joi.number().positive().required().min(16),
         color: Joi.string().required(),
+        phoneNumber: Joi.string().min(7).max(17).required(),
         price: Joi.number().positive().required(),
         images: Joi.array().items(
             Joi.object({

@@ -18,6 +18,7 @@ const data = {
                 "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
             storageSize: 128,
             color: 'Blue',
+            phoneNumber: '+306944513675',
             price: 267,
             images: [
                 {
@@ -47,6 +48,7 @@ const data = {
                 'Samsung Pay (Visa, MasterCard certified) IP68 dust/water resistant (up to 1.5m for 30 mins) storageSize: 128,',
             storageSize: 128,
             color: 'Silver/Black',
+            phoneNumber: '+306944513675',
             price: 102.9,
             images: [
                 {
@@ -76,6 +78,7 @@ const data = {
                 "English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.",
             storageSize: 64,
             color: 'Black',
+            phoneNumber: '+306944513675',
             price: 150.0,
             images: [
                 {
@@ -109,6 +112,7 @@ const data = {
                 '5 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature,',
             storageSize: 256,
             color: 'White',
+            phoneNumber: '+306944513675',
             price: 302.0,
             images: [
                 {
@@ -135,6 +139,7 @@ const data = {
                 "ble. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. ",
             storageSize: 32,
             color: 'Black/Silver',
+            phoneNumber: '+306944513675',
             price: 97.99,
             images: [
                 {
@@ -164,6 +169,7 @@ const data = {
                 "you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. ",
             storageSize: 128,
             color: 'Yellow',
+            phoneNumber: '+306944513675',
             price: 127.45,
             images: [
                 {
@@ -185,6 +191,7 @@ const data = {
                 'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from  by Cicero are also reproduced in their exact original form ',
             storageSize: 128,
             color: 'Black',
+            phoneNumber: '+306944513675',
             price: 132.45,
             images: [
                 {
@@ -210,6 +217,7 @@ const data = {
                 '1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from  by Cicero are also reproduced in their exact original form ',
             storageSize: 256,
             color: 'Purple',
+            phoneNumber: '+306944513675',
             price: 114.45,
             images: [
                 {
@@ -234,6 +242,7 @@ const data = {
             state: 'Old tool! their exact original form ',
             storageSize: 16,
             color: 'White',
+            phoneNumber: '+306944513675',
             price: 37.45,
             images: [
                 {
@@ -259,6 +268,7 @@ const data = {
                 "I've owned this phone for three months. It cost Â€80 Euro in a Vodafone Ireland store. My main uses are WhatsApp, video calling, social media and YouTube. The phone has been very good, reliable and the battery lasts about 30 hours once charged.",
             storageSize: 32,
             color: 'White/Silver/Grey',
+            phoneNumber: '+306944513675',
             price: 89.45,
             images: [
                 {
@@ -283,6 +293,7 @@ const data = {
                 "Hi, I've wanted to write something about acer liquid z6... I can see you didn't satisfied with performance of battery, but it depends what are you doing on the phone. I bought this phone on december 2016 and I' m very satisfied with it",
             storageSize: 32,
             color: 'White/Silver/Grey',
+            phoneNumber: '+306944513675',
             price: 79.99,
             images: [
                 {
@@ -308,6 +319,7 @@ const data = {
                 'yes i already wrote that in my previous comment and it is proven to be good and as of a week ago it is with android 10.0 and works great',
             storageSize: 128,
             color: 'Cyan',
+            phoneNumber: '+306944513675',
             price: 179.99,
             images: [
                 {

@@ -54,6 +54,7 @@ router.post('/', [auth], upload.array('images'), async (req, res) => {
             storageSize: req.body.storageSize,
             color: req.body.color,
             price: req.body.price,
+            phoneNumber: req.body.phoneNumber,
             images: imageArray,
             creatorID: req.body.creatorID
         });
