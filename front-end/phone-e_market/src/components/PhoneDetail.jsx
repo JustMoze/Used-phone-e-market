@@ -6,6 +6,7 @@ import ImageSlider from '../common/imageSlider';
 import CircularIndeterminate from '../common/CircularIndeterminate';
 import PhoneTable from '../common/table';
 import PhoneStateComponent from '../common/expansionPanel';
+import PhoneNumber from '../common/phoneNumber';
 
 class PhoneDetail extends Component {
     constructor(props) {
@@ -102,6 +103,12 @@ class PhoneDetail extends Component {
                             <PhoneStateComponent
                                 label="Detail information: "
                                 data={phone.state}
+                            />
+                        </Grid>
+                        <Grid item lg={4} md={6} xs={8}>
+                            <PhoneNumber
+                                label="Owner's phone number"
+                                value={phone.phoneNumber}
                             />
                         </Grid>
                     </Grid>

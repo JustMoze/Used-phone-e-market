@@ -2,7 +2,6 @@ import React from 'react';
 
 function SearchForm(props) {
     const { type, placeholder, value, onChange } = props;
-    console.log('in search form', value);
     return (
         <div className="form-inline d-flex justify-content-center md-form form-sm mt-2">
             <input

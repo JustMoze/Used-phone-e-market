@@ -19,6 +19,7 @@ function AddPhone(props) {
         state: '',
         storageSize: '',
         color: '',
+        phoneNumber: '',
         price: '',
         images: [],
         creatorID: ownerID
@@ -40,6 +41,7 @@ function AddPhone(props) {
         state: Joi.string().required(),
         storageSize: Joi.number().positive().required().min(16),
         color: Joi.string().required(),
+        phoneNumber: Joi.string().min(7).max(17).required(),
         price: Joi.number().positive().required(),
         images: Joi.array().items(
             Joi.object({

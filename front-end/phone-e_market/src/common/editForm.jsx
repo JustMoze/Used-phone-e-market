@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import FormTextField from './formTextField';
+import PhoneNumber from './phoneNumber';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,6 +30,7 @@ export default function EditForm(props) {
         state,
         storageSize,
         color,
+        phoneNumber,
         price
     } = phone;
     const classes = useStyles();
@@ -90,7 +92,7 @@ export default function EditForm(props) {
                         </Grid>
                     </Grid>
                     <Grid container spacing={2}>
-                        <Grid item xs={12} lg={6} md={6}>
+                        <Grid item xs={12} lg={4} md={6}>
                             <FormTextField
                                 label="Color"
                                 name="color"
@@ -99,7 +101,16 @@ export default function EditForm(props) {
                                 error={errors['color']}
                             />
                         </Grid>
-                        <Grid item xs={12} lg={6} md={6}>
+                        <Grid item xs={12} lg={4} md={6}>
+                            <FormTextField
+                                label="Owner's phone number"
+                                name="phoneNumber"
+                                value={phoneNumber}
+                                onChange={onChange}
+                                error={errors['color']}
+                            />
+                        </Grid>
+                        <Grid item xs={12} lg={4} md={6}>
                             <FormTextField
                                 label="Price"
                                 unit="€"

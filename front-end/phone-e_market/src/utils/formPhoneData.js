@@ -10,6 +10,7 @@ export function formPhoneData(phone) {
     formData.append('state', phone.state);
     formData.append('storageSize', phone.storageSize);
     formData.append('color', phone.color);
+    formData.append('phoneNumber', phone.phoneNumber);
     formData.append('price', phone.price);
     phone.images.forEach((image) => {
         formData.append('images', image);

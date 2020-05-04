@@ -25,18 +25,19 @@ function EditPage(props) {
         _id: Joi.string(),
         model: Joi.string().min(2).required(),
         brand: Joi.string().required(),
-        screenSize: Joi.number().positive().required(),
-        RAMsize: Joi.number().positive().required(),
+        screenSize: Joi.number().positive().required().min(3),
+        RAMsize: Joi.number().positive().required().min(1),
         state: Joi.string().required(),
-        storageSize: Joi.number().positive().required(),
+        storageSize: Joi.number().positive().required().min(16),
         color: Joi.string().required(),
+        phoneNumber: Joi.string().min(7).max(17).required(),
         price: Joi.number().positive().required(),
         images: Joi.array().items(
             Joi.object({
                 path: Joi.string()
             })
         ),
-        creatorID: Joi.string().required()
+        creatorID: Joi.string()
     };
 
     useEffect(() => {
@@ -57,6 +58,16 @@ function EditPage(props) {
             const definedSchema = { [name]: schema[name] };
             const { error } = Joi.validate(obj, definedSchema);
             return error ? error.details[0].message : null;
+        }
+        function validate() {
+            const options = { abortEarly: false };
+            const { error } = Joi.validate(phone, schema, options);
+            if (!error) return null;
+
+            const currentERRORS = {};
+            for (let item of error.details)
+                currentERRORS[item.path[0]] = item.message;
+            return currentERRORS;
         }
 
         function handleInputChange(e) {
@@ -97,6 +108,12 @@ function EditPage(props) {
         };
 
         function handleUpdateClose() {
+            const currentErrors = validate();
+            setErrors(currentErrors || {});
+            if (currentErrors) {
+                setOpen(false);
+                return;
+            }
             formData = formPhoneData(phone);
             const config = {
                 headers: { 'content-type': 'multipart/form-data' }

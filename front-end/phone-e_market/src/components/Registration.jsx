@@ -41,9 +41,7 @@ class Registration extends Form {
         }
     };
     handleClickOpen = () => {
-        console.log('open dialog', this.state.open);
         this.setState({ open: true });
-        console.log('open dialog 2', this.state.open);
     };
     handleClose = () => {
         this.setState({ open: false });
@@ -51,7 +49,6 @@ class Registration extends Form {
     render() {
         const { smallScreen } = this.props;
         const { open } = this.state;
-        console.log('open prop', open);
         var text =
             'Please go to your email address and click on email verification link that we send to you';
         if (auth.getCurrentUser()) return <Redirect to="/" />;

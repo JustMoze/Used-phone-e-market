@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import Joi from 'joi-browser';
 import { Redirect } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import Form from '../common/form';
 import BackButton from '../common/backButton';
 import loginImage from '../images/loginPhoto.jpg';
@@ -32,6 +33,8 @@ class Login extends Form {
             if (ex.response && ex.response.status === 400) {
                 const errors = { ...this.state.errors };
                 errors.username = ex.response.data;
+                toast.error(ex.response.data);
+                console.log(ex);
                 this.setState({ errors });
             }
         }
@@ -48,6 +51,7 @@ class Login extends Form {
                         )}
                     </div>
                     <div className="col-sm-6 col-md-6 col-lg-6">
+                        <ToastContainer />
                         <div className="row action-btn-div">
                             {smallScreen && <BackButton />}
                         </div>
